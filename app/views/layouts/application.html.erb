@@ -10,7 +10,53 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body>
+  <% if flash[:notice] %>
+    <div class="notification is-info">
+      <p class="notice"><%= notice %></p>
+    </div>
+  <% end %>
+  <% if flash[:alert] %>
+    <div class="notification is-denger">
+      <p class="alert"><%= alert %></p>
+    </div>
+  <% end %>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+      <a class="navbar-brand" href="/"><span>Bookers</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+  <% if user_signed_in? %>
+      <li><a class="fas fa-home nav-link text-light" href="<%= user_path(current_user.id) %>"> home</a></li>
+      <li><a class="fas fa-users nav-link text-light" href="/users"> Users</a></li>
+      <li><a class="fas fa-book-open nav-link text-light" href="/books"> Books</a></li>
+      
+      <li><a class="fas fa-sign-out-alt nav-link text-light" rel="nofollow" data-method="delete" href="/users/sign_out"> logout</a></li>
+  <% else %>
+      <li><a class="fas fa-home nav-link text-light" href="/"> Home</a></li>
+      <li><a class="fas fa-link nav-link text-light" href="/home/about"> About</a></li>
+      <li><a class="fas fa-user-plus nav-link text-light" href="/users/sign_up"> sign up</a></li>
+      <li><a class="fas fa-sign-in-alt nav-link text-light" href="/users/sign_in"> login</a></li>
+  <% end %>
+        </ul>
+      </div>
+    </div>
+    </nav>
+  </header>
+  <%= yield %>
+  <footer class="footer">
+    <div class='container mt-5'>
+      <div class='row'>
+	      <div class='mx-auto'>
+		      <p>CopyRight Infratop.inc</p>
+	      </div>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>
